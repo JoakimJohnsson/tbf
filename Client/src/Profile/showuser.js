@@ -4,94 +4,122 @@ import { Link } from 'react-router-dom';
 
 import * as ACTIONS from '../store/actions/actions';
 import axios from 'axios';
-import history from '../utils/history';
+import moment from 'moment';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardHeader from '@material-ui/core/CardHeader';
 
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+import Button from '@material-ui/core/Button';
 
 
-class ShowMessages extends Component {
+
+
+
+class ShowUser extends Component {
+
+
     componentDidMount() {
-        const username = this.props.db_profile[0].username
-        axios.get('/api/get/usermessages', {params: {username: username}})
-            .then(res =>  this.props.set_user_messages(res.data))
+        const username = this.props.location.state.post.post.author;
+        axios.get('/api/get/otheruserprofilefromdb', {params: {username: username}} )
+            .then(res =>  this.props.set_profile(res.data))
             .catch(function (error) {
                 console.log(error);
             })
+        axios.get('/api/get/otheruserposts', {params: {username: username}} )
+            .then(res =>  this.props.set_db_posts(res.data))
+            .catch(function (error) {
+                console.log(error);
+            });
+        window.scrollTo({top: 0, left: 0})
     }
 
-    RenderMessages = (props) => (
-        <TableRow>
-            <TableCell>
-                <p> <strong>From: </strong>  {props.message.message_sender} </p>
-                <p> <strong>Title </strong>   { props.message.message_title } </p>
-                <p><strong> Message:</strong>  { props.message.message_body } </p>
-                <small> { props.message.date_created } </small>
-                <br />
-                <Link to={{pathname:"/replytomessage", state:{props} }}>
-                    <button>
-                        Reply
-                    </button>
+
+    RenderProfile = (props) => (
+        <div>
+            <div className="FlexRow">
+                <h1>
+                    {props.profile.username}
+                </h1>
+            </div>
+            <div className="FlexRow">
+                <Link to={{pathname:"/sendmessage/", state:{props} }}>
+                    <Button variant="contained" color="primary" type="submit">
+                        Send Message
+                    </Button>
                 </Link>
-                <button onClick={() => this.DeleteMessage(props.message.mid)}> Delete </button>
-                <br />
-                <br />
-                <button onClick={() => history.goBack()}> Cancel </button>
-            </TableCell>
-        </TableRow>
-    )
+            </div>
+        </div>
+    );
 
-    DeleteMessage = (mid) => {
-        axios.delete('/api/delete/usermessage', { data: { mid: mid }})
-            .then(res => console.log(res))
-            .catch(function (error) {
-                console.log(error);
-            })
-            .then(() => setTimeout( function() { history.replace('/') }, 700))
-    }
+
+    RenderPosts = (post) => (
+        <div>
+            <Card className="CardStyles">
+                <CardHeader
+                    title={<Link to={{pathname:"/post/" + post.post.pid, state: {post} }}>
+                        { post.post.title }
+                    </Link>}
+                    subheader={
+                        <div>
+                            <div >
+                                {  moment(post.post.date_created).format('MMMM Do, YYYY | h:mm a') }
+                            </div>
+                            <div >{ post.post.author}</div>
+                        </div> }
+                />
+                <CardContent>
+                    <span style={{ overflow: 'hidden'}}>{ post.post.body } </span>
+                </CardContent>
+            </Card>
+        </div>
+    );
 
 
     render() {
         return (
             <div>
-                <div className='FlexRow'>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell> <strong> Messages </strong> </TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            { this.props.user_messages
-                                ? this.props.user_messages.map( message =>
-                                    <this.RenderMessages key={message.mid} message={message} />
-                                )
-                                : null
-                            }
-                        </TableBody>
-                    </Table>
+                <div className="FlexRow">
+                    { this.props.user_profile
+                        ? <this.RenderProfile profile={this.props.user_profile[0]} />
+                        : null
+                    }
+                </div>
+
+                <br />
+                <hr className="style-two" />
+
+                <h3> Latest Activity: </h3>
+                <div className="FlexColumn">
+                    { this.props.user_posts ?
+                        this.props.user_posts.map(post =>
+                            <div>
+                                <this.RenderPosts key={ post.pid } post={post} />
+                                <br />
+                            </div>
+                        )
+                        : null
+                    }
                 </div>
             </div>
         )}
 }
 
 
+
 function mapStateToProps(state) {
     return {
-        db_profile: state.auth_reducer.db_profile,
-        user_messages: state.user_reducer.UserMessages
+        user_profile: state.user_reducer.OtherUserDBProfile,
+        user_posts: state.user_reducer.db_other_user_posts
     }
 }
 
 
 function mapDispatchToProps (dispatch) {
     return {
-        set_user_messages: (messages) => dispatch(ACTIONS.set_user_messages(messages))
+        set_db_posts: (posts) => dispatch(ACTIONS.get_other_user_db_posts(posts)),
+        set_profile: (profile) => dispatch(ACTIONS.set_other_user_db_profile(profile))
     }
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(ShowMessages);
+export default connect(mapStateToProps, mapDispatchToProps)(ShowUser);

@@ -1,45 +1,170 @@
-export const SUCCESS = "SUCCESS"
+import * as ACTION_TYPES from './action_types'
 
-export const FAILURE = "FAILURE"
+export const SUCCESS = {
+    type: ACTION_TYPES.SUCCESS
+}
 
-export const USER_INPUT = "USER_INPUT"
+export const FAILURE = {
+    type: ACTION_TYPES.FAILURE
+}
 
-export const LOGIN_SUCCESS = "LOGIN_SUCCESS"
 
-export const LOGIN_FAILURE = "LOGIN_FAILURE"
+export const success = () => {
+    return {
+        type: ACTION_TYPES.SUCCESS
+    }
+}
 
-export const ADD_PROFILE = "ADD_PROFILE"
+export const failure = () => {
+    return {
+        type: ACTION_TYPES.FAILURE
+    }
+}
 
-export const REMOVE_PROFILE = "REMOVE_PROFILE"
+export const user_input = (text) => {
+    return {
+        type: ACTION_TYPES.USER_INPUT,
+        payload: text
+    }
+}
 
-export const SET_DB_PROFILE = "SET_DB_PROFILE"
 
-export const REMOVE_DB_PROFILE = "REMOVE_DB_PROFILE"
+export const login_success = () => {
+    return {
+        type: ACTION_TYPES.LOGIN_SUCCESS
+    }
+}
 
-export const FETCH_DB_POSTS = "FETCH_DB_POSTS"
+export const login_failure = () => {
+    return {
+        type: ACTION_TYPES.LOGIN_FAILURE
+    }
+}
 
-export const REMOVE_DB_POSTS = "REMOVE_DB_POSTS"
 
-export const FETCH_POST_COMMENTS = "FETCH_POST_COMMENTS"
+export const add_profile = (profile) => {
+    return {
+        type: ACTION_TYPES.ADD_PROFILE,
+        payload: profile
+    }
+}
 
-export const REMOVE_POST_COMMENTS = "REMOVE_POST_COMMENTS"
+export const remove_profile = () => {
+    return {
+        type: ACTION_TYPES.REMOVE_PROFILE
+    }
+}
 
-export const FETCH_USER_POSTS = "FETCH_USER_POSTS"
 
-export const REMOVE_USER_POSTS = "REMOVE_USER_POSTS"
+export const set_db_profile = (profile) => {
+    return {
+        type: ACTION_TYPES.SET_DB_PROFILE,
+        payload: profile
+    }
+}
 
-export const SEARCH_POSTS_SUCCESS = "SEARCH_POSTS_SUCCESS"
+export const remove_db_profile = () => {
+    return {
+        type: ACTION_TYPES.REMOVE_DB_PROFILE
+    }
+}
 
-export const SEARCH_POSTS_FAILURE = "SEARCH_POSTS_FAILURE"
+export const fetch_db_posts = (posts) => {
+    return {
+        type: ACTION_TYPES.FETCH_DB_POSTS,
+        payload: posts
+    }
+}
 
-export const REMOVE_OTHER_USER_DB_POSTS = 'REMOVE_OTHER_USER_DB_POSTS'
+export const remove_db_posts = () => {
+    return {
+        type: ACTION_TYPES.REMOVE_DB_POSTS
+    }
+}
 
-export const SET_OTHER_USER_DB_PROFILE = 'SET_OTHER_USER_DB_PROFILE'
 
-export const REMOVE_OTHER_USER_DB_PROFILE = 'REMOVE_OTHER_USER_DB_PROFILE'
+export const fetch_post_comments = (comments) => {
+    return {
+        type: ACTION_TYPES.FETCH_POST_COMMENTS,
+        payload: comments
+    }
+}
 
-export const FETCH_OTHER_USER_DB_POSTS_SUCCESS = 'FETCH_OTHER_USER_DB_POSTS_SUCCESS'
+export const remove_post_comments = () => {
+    return {
+        type: ACTION_TYPES.REMOVE_POST_COMMENTS
+    }
+}
 
-export const SET_USER_MESSAGES = 'SET_USER_MESSAGES'
 
-export const REMOVE_USER_MESSAGES = 'REMOVE_USER_MESSAGES'
+
+export const fetch_user_posts = (posts) => {
+    return {
+        type: ACTION_TYPES.FETCH_USER_POSTS,
+        payload: posts
+    }
+}
+
+export const remove_user_posts = () => {
+    return {
+        type: ACTION_TYPES.REMOVE_USER_POSTS
+    }
+}
+
+export const fetch_search_posts = (posts) => {
+    return {
+        type: ACTION_TYPES.SEARCH_POSTS_SUCCESS,
+        payload: posts
+    }
+}
+
+export const remove_search_posts = () => {
+    return {
+        type: ACTION_TYPES.SEARCH_POSTS_FAILURE
+    }
+}
+
+
+//Get posts from the db based on user id of another user
+export function get_other_user_db_posts(posts) {
+    return {
+        type: ACTION_TYPES.FETCH_OTHER_USER_DB_POSTS_SUCCESS,
+        payload: posts
+    }
+}
+
+export function remove_other_user_db_posts() {
+    return {
+        type: ACTION_TYPES.REMOVE_OTHER_USER_DB_POSTS
+    }
+}
+
+
+//Actions for rendering profile info of another user
+export function set_other_user_db_profile(profile) {
+    return {
+        type: ACTION_TYPES.SET_OTHER_USER_DB_PROFILE,
+        payload: profile
+    }
+}
+
+export function remove_other_user_db_profile() {
+    return {
+        type: ACTION_TYPES.REMOVE_OTHER_USER_DB_PROFILE
+    }
+}
+
+
+//Actions for setting users messages
+export function set_user_messages(messages) {
+    return {
+        type: ACTION_TYPES.SET_USER_MESSAGES,
+        payload: messages
+    }
+}
+
+export function remove_user_messages() {
+    return {
+        type: ACTION_TYPES.REMOVE_USER_MESSAGES
+    }
+}
