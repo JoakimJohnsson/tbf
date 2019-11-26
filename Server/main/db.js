@@ -1,10 +1,10 @@
 const { Pool } = require('mysql')
 
 const pool = new Pool({
-    user: 'hunkpapa',
+    user: 'root',
     host: 'localhost',
     database: 'tbf_db',
-    password: 'hunkpapa',
+    password: '',
     post: 5432
 });
 
