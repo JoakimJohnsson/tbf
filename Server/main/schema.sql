@@ -1,4 +1,4 @@
-CREATE TABLE `tbf_db`.`users`
+CREATE TABLE `tbf_sql_db`.`users`
 (
     `uid`            INT          NOT NULL AUTO_INCREMENT,
     `username`       VARCHAR(255) NULL,
@@ -10,7 +10,7 @@ CREATE TABLE `tbf_db`.`users`
     UNIQUE INDEX `username_UNIQUE` (`username` ASC)
 );
 
-CREATE TABLE `tbf_db`.`posts`
+CREATE TABLE `tbf_sql_db`.`posts`
 (
     `pid`           INT          NOT NULL AUTO_INCREMENT,
     `title`         VARCHAR(255) NULL,
@@ -24,7 +24,7 @@ CREATE TABLE `tbf_db`.`posts`
     PRIMARY KEY (`pid`)
 );
 
-CREATE TABLE `tbf_db`.`comments`
+CREATE TABLE `tbf_sql_db`.`comments`
 (
     `cid`          INT          NOT NULL AUTO_INCREMENT,
     `comment`      VARCHAR(255) NULL,
@@ -35,7 +35,7 @@ CREATE TABLE `tbf_db`.`comments`
     PRIMARY KEY (`cid`)
 );
 
-CREATE TABLE `tbf_db`.`messages`
+CREATE TABLE `tbf_sql_db`.`messages`
 (
     `mid`            INT          NOT NULL AUTO_INCREMENT,
     `message_sender` VARCHAR(255) NULL,
