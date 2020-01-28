@@ -3,9 +3,9 @@ const { Pool } = require('mysql')
 const pool = new Pool({
     user: 'root',
     host: 'localhost',
-    database: 'tbf_sql_db',
+    database: 'tbf_db',
     // TODO Create env conf files
-    password: 'su_password',
+    password: 'Vinter201901',
     post: 5432
 });
 
