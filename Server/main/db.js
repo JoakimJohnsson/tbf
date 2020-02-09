@@ -1,11 +1,12 @@
-const { Pool } = require('mysql')
+const { Pool } = require('mysql');
+
+console.log("password", `${process.env.REACT_APP_TBF_DB_PW}`);
 
 const pool = new Pool({
     user: 'root',
     host: 'localhost',
     database: 'tbf_sql_db',
-    // TODO Create env conf files
-    password: 'su_password',
+    password: `${process.env.REACT_APP_TBF_DB_PW}`,
     post: 5432
 });
 

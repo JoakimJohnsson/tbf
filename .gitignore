@@ -1,3 +1,4 @@
 .idea
+.env
 .sass-cache/
 *.css.map
